@@ -76,9 +76,9 @@ let bye;
 <img src="https://user-images.githubusercontent.com/87024040/208879212-11fec12d-38b7-4cca-a756-6f8d8d8f9142.png" width="600px" height="200px"><br/>
 - `var`는 변수 선언의 3단계 중 `선언단계`와`초기화단계`가 스코프의 선두에서 한 번에 이루어진다(호이스팅).
 
-`let` 키워드로 선언된 변수 생명 주기<br/>
+#### `let` 키워드로 선언된 변수 생명 주기<br/>
 <img src="https://user-images.githubusercontent.com/87024040/208882504-24148eec-4ad8-46d9-9b2d-ed345750fd9b.png"><br/>
-`let`으로 선언된 변수 생명 주기
+#### `let`으로 선언된 변수 생명 주기
 <img src="https://user-images.githubusercontent.com/87024040/208882504-24148eec-4ad8-46d9-9b2d-ed345750fd9b.png"><br/>
 - `let`으로 선언된 변수는 `선언단계`와 `초기화단계`가 분리되어있기 때문에, 스코프의 시작 지점부터 초기화 지점까지는 변수를 참조할 수 없다. <br/>
 - `스코프의 시작`부터 `초기화단계`까지의 구간을 `변수의 일시적 사각지대`라고 부른다. 
@@ -130,6 +130,7 @@ for (var j = 0; j < 3; j++) {
 Browser-side에서는 widow객체, Server-side(Node.js)에서는 Global 객체를 말한다. <br/>
 
 - `var`키워드로 선언된 변수를 전역 변수로 사용하면, 전역 객체의 프로퍼티가 된다.<br/>
+```jsx
 var num = 111; // 전역변수
 console.log(window.num); // 111
 ```
