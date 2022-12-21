@@ -91,4 +91,38 @@ let num = 1;
 ```
 - `let`은 블록 레벨 스코프를 가지기 때문에 블록 내에서도 호이스팅이 발생하기 때문에 참조 에러가 발생한다.
 
-# 클로져(Closer)
+# 클로저(Closure)
+> for 루프처럼 `var`을 사용하면 초기화식에 사용되었던 변수는 계속해서 전역 변수로 남아있다. <br/>따라서 해당 변수를 불러올 때 최종적인 변수의 값으로 대입이 되는데 클로저는 이를 해결할 수 있다. <div/>
+
+**`var`의 경우** <div/>
+```jsx
+var funcs = [];
+for(var i = 0; i < 3; i++){
+    funcs.push(function () {console.log(i)});
+}
+for(var j = 0; j < 3; j++){
+    funcs[j]();
+}
+// 3 3 3 
+```
+- 첫 번째 코드는 for 문안에 i가 `var`로 선언되어있다. <br/>
+따라서 0 1 2로 나오는 것이 아니라 최종 변수 값 3이 계속 출력되는 것이다.<div/>
+
+**`let`의 경우**<div/>
+```jsx
+var funcs = [];
+
+for (let i = 0; i < 3; i++) {
+  funcs.push(function () { console.log(i); });
+}
+
+for (var j = 0; j < 3; j++) {
+  console.dir(funcs[j]);
+  funcs[j]();
+}
+// 0 1 2
+```
+- `let`키워드를 for루프 초기화 식에 사용하면, 블록 스코프이기 때문에 i는 for 루프에서만 유효한 변수다. <br />
+따라서 for 문을 반복할 때마다 새로운 블록으로 간주해서 0 1 2로 출력된다.
+
+
