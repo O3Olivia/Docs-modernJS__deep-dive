@@ -67,6 +67,9 @@ let bye;
 - undefined로 초기화 된 변수에 값을 할당한다.
 
 ## 변수의 사각지대(Temporal DeadZone: TDZ)
+`var` 키워드로 선언된 변수 생명 주기<br/>
+<img src="https://user-images.githubusercontent.com/87024040/208879212-11fec12d-38b7-4cca-a756-6f8d8d8f9142.png" width="600px" height="200px"><br/>
 `var`는 변수 선언의 3단계 중 `선언단계`와`초기화단계`가 스코프의 선두에서 한 번에 이루어진다(호이스팅).
+`let` 키워드로 선언된 변수 생명 주기<br/>
 
 그러나, 
