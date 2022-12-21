@@ -24,6 +24,11 @@
 
 **3.변수 중복 선언 허용** <br/>
 - `let`과 달리 `var`은 몇 번이고 같은 변수를 선언할 수 있어 의도치 않게 변수를 남발하거나 변수 값이 변경될 수 있다.<br>
+``` jsx
+[ 💡 Note ]
+let num = 111;
+let num = 222; // ERROR 
+```
 
 **4.변수 호이스팅(끌어올림)** <br/>
 - `var`로 변수를 선언하면 이 선언문은 함수의 맨 위로 끌어올려져서 선언 이전에 참조할 수 있다.<br>
@@ -49,7 +54,7 @@ console.log(bye); // Error: Uncaught ReferenceError
 let bye;
 ```
 `var`키워드로 선언된 변수는 호이스팅되어 변수를 선언하기 전에 참조해도 에러가 발생하지 않지만, <br/>
-`let`키워드로 선언된 변수는 선언하기 전에 참조하면 변수의 사각지대(Temporal DeadZone: TDZ)에 빠져 참조에러(ReferenceError)가 발생한다.<br/>
+`let`키워드로 선언된 변수는 선언하기 전에 참조하면 변수의 일시적 사각지대(Temporal DeadZone: TDZ)에 빠져 참조에러(ReferenceError)가 발생한다.<br/>
 ## 변수 선언의 3단계
 > 변수는 `선언`, `초기화`, `할당` 3단계를 거쳐 생성된다.
 
@@ -66,10 +71,24 @@ let bye;
 **3️⃣할당 단계(Assignment phase)**  <br/>
 - undefined로 초기화 된 변수에 값을 할당한다.
 
-## 변수의 사각지대(Temporal DeadZone: TDZ)
+## 변수의 일시적 사각지대(Temporal DeadZone: TDZ)
 `var` 키워드로 선언된 변수 생명 주기<br/>
 <img src="https://user-images.githubusercontent.com/87024040/208879212-11fec12d-38b7-4cca-a756-6f8d8d8f9142.png" width="600px" height="200px"><br/>
-`var`는 변수 선언의 3단계 중 `선언단계`와`초기화단계`가 스코프의 선두에서 한 번에 이루어진다(호이스팅).
-`let` 키워드로 선언된 변수 생명 주기<br/>
+- `var`는 변수 선언의 3단계 중 `선언단계`와`초기화단계`가 스코프의 선두에서 한 번에 이루어진다(호이스팅).
 
-그러나, 
+`let` 키워드로 선언된 변수 생명 주기<br/>
+<img src="https://user-images.githubusercontent.com/87024040/208882504-24148eec-4ad8-46d9-9b2d-ed345750fd9b.png"><br/>
+`let`으로 선언된 변수 생명 주기
+<img src="https://user-images.githubusercontent.com/87024040/208882504-24148eec-4ad8-46d9-9b2d-ed345750fd9b.png"><br/>
+- `let`으로 선언된 변수는 `선언단계`와 `초기화단계`가 분리되어있기 때문에, 스코프의 시작 지점부터 초기화 지점까지는 변수를 참조할 수 없다. <br/>
+- `스코프의 시작`부터 `초기화단계`까지의 구간을 `변수의 일시적 사각지대`라고 부른다. 
+```jsx
+let num = 1;
+{
+    console.log(num); // Error: ReferenceError
+    let num = 2;
+}
+```
+- `let`은 블록 레벨 스코프를 가지기 때문에 블록 내에서도 호이스팅이 발생하기 때문에 참조 에러가 발생한다.
+
+# 클로져(Closer)
