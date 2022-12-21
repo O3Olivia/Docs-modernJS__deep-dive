@@ -53,20 +53,20 @@ let bye;
 ## 변수 선언의 3단계
 > 변수는 `선언`, `초기화`, `할당` 3단계를 거쳐 생성된다.
 
+<img src="https://user-images.githubusercontent.com/87024040/208873161-86b72c00-0ce6-4746-be9c-3a91b07464d0.png" width="500px" height="200px">
+
 **1️⃣선언 단계(Declaration phase)**<br/>
-    - 변수 객체를 생성하고 변수를 등록한다. <br/>
-    - 스코프는 이 변수 객체를 참고한다.
+- 변수 객체를 생성하고 변수를 등록한다. <br/>
+- 스코프는 이 변수 객체를 참고한다.
     
 **2️⃣초기화 단계(Initialization phase)** <br/>
-    - 변수 객체에 등록된 변수를 메모리에 할당한다. <br/>
-    - 변수는 undefined로 초기화된다.
+- 변수 객체에 등록된 변수를 위한 공간을 메모리에 할당한다. <br/>
+- 그리고 변수는 undefined로 초기화된다.
     
 **3️⃣할당 단계(Assignment phase)**  <br/>
-    - undefined로 초기화 된 변수에 값을 할당한다.
+- undefined로 초기화 된 변수에 값을 할당한다.
 
-```
-[ 💡 Note ]
-#변수의 사각지대(Temporal DeadZone: TDZ)
+## 변수의 사각지대(Temporal DeadZone: TDZ)
+`var`는 변수 선언의 3단계 중 `선언단계`와`초기화단계`가 스코프의 선두에서 한 번에 이루어진다(호이스팅).
 
-```
-
+그러나, 
