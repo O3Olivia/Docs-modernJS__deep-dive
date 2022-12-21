@@ -38,6 +38,35 @@
 ```
 `전역변수`는 사용하기 편리하지만, 스코프 범위가 넓어 어디에서 사용할지 파악하기 어려우며, 의도치않게 변경될 수 있어서 복잡하다. <br />이러한 `var`의 단점을 보안하기 위해서 `let` 과 `const`이 도입되었다.
 
-# 변수 선언(Variable Declaration)
+# let과 호이스팅(Hoisting)
+> JavaScript는 모든 선언을 호이스팅한다. <br />
+호이스팅 : `var`, function 선언문 등을 해당 스코프의 선두로 끌어 올려진 것처럼 동작한다.
+```jsx
+console.log(hello); // undefined
+var hello;
 
+console.log(bye); // Error: Uncaught ReferenceError
+let bye;
+```
+`var`키워드로 선언된 변수는 호이스팅되어 변수를 선언하기 전에 참조해도 에러가 발생하지 않지만, <br/>
+`let`키워드로 선언된 변수는 선언하기 전에 참조하면 변수의 사각지대(Temporal DeadZone: TDZ)에 빠져 참조에러(ReferenceError)가 발생한다.<br/>
+## 변수 선언의 3단계
+> 변수는 `선언`, `초기화`, `할당` 3단계를 거쳐 생성된다.
+
+**1️⃣선언 단계(Declaration phase)**<br/>
+    - 변수 객체를 생성하고 변수를 등록한다. <br/>
+    - 스코프는 이 변수 객체를 참고한다.
+    
+**2️⃣초기화 단계(Initialization phase)** <br/>
+    - 변수 객체에 등록된 변수를 메모리에 할당한다. <br/>
+    - 변수는 undefined로 초기화된다.
+    
+**3️⃣할당 단계(Assignment phase)**  <br/>
+    - undefined로 초기화 된 변수에 값을 할당한다.
+
+```
+[ 💡 Note ]
+#변수의 사각지대(Temporal DeadZone: TDZ)
+
+```
 
