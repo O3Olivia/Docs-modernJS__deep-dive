@@ -7,6 +7,6 @@
 
 JavaScript에서 함수를 정의하면, 함수 멤버로 `prototype`이 있다. <br/>
 이 `prototype`은 다른 곳에 생성된 함수의 프로토타입 객체를 참조하며, `prototype`객체 멤버인 constructor 속성이 함수를 참조하는 내부 구조를 가진다.
-<div align="left">
 <img src="https://user-images.githubusercontent.com/87024040/209089085-60dc329b-3be1-49a1-b3d7-b66a3c052492.png" width="600" height="300">
-</div>
+
+<img src="https://user-images.githubusercontent.com/87024040/209090397-3fedfc54-d8f8-47e5-8493-8840eaa1f860.png" width="600" height="300">
