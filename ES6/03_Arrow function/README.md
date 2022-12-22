@@ -169,4 +169,201 @@ JavaScript에서 this는 this에 바인딩 되는 객체가 한가지가 아니�
 
 - apply() / call() / bind() 호출
 
-- JavaScript 언어 기능을 통한 묵시적 호출
+  ```jsx
+  var Person = function (name) {
+    this.name = name;
+  };
+
+  var me = {};
+
+  Person.apply(me, ["oli"]);
+
+  console.log(me); // { name: 'oli' }
+  ```
+
+  - apply() 메소드는 Person을 호출한다. <br />
+    이때 `this`에 me 객체를 바인딩한다.
+
+  ```jsx
+  function Person(name) {
+    this.name = name;
+  }
+
+  Person.prototype.doSomething = function (callback) {
+    if (typeof callback == "function") {
+      callback(); // 1
+    }
+  };
+
+  function getName() {
+    console.log(this.name); //2
+  }
+
+  var a = new Person("Lee");
+  a.doSomething(getName); // undefined
+  ```
+
+  - 1️⃣의 this는 Person객체
+  - 2️⃣의 this는 전역객체라 window를 가르킨다. 이때 두 함수의 this가 달라서 undefined가 뜨는데, 이를 해결하기위해 `call`메소드 사용.<br/>
+    - call()메소드 : 주어진 this 값 및 각각 전달된 인수와 함께 함수를 호출한다.
+
+  ```jsx
+  function Person(name) {
+    this.name = name;
+  }
+
+  Person.prototype.doSomething = function (callback) {
+    if (typeof callback == "function") {
+      callback.call(this);
+    }
+  };
+
+  function getName() {
+    console.log(this.name);
+  }
+
+  var a = new Person("Lee");
+  a.doSomething(getName); // 'Lee'
+  ```
+
+  **일반 함수** : 함수를 선언할 때 `this`에 바인딩할 객체가 정적으로 결정되지 x<br/>함수를 호출할 때 함수가 어떻게 호출되었는지에 따라 `this`에 바인딩할 객체가 동적으로 결정된다.
+
+### 화살표 함수의 this
+
+> 화살표 함수는 `함수를 선언`할 때 정적으로 결정된다.
+> 동적으로 결정되던 일반 함수와 달리 자신을 포함하는 외부 스코프에서 `this`를 받는데, <br/>
+> 화살표 함수의 `this`는 상위 스코프의 `this`를 카르키며 이것을 `Lexical this`라고 한다.
+
+```jsx
+function Prefixer(prefix) {
+  this.prefix = prefix;
+}
+
+Prefixer.prototype.prefixArray = function (arr) {
+  return arr.map((x) => `${this.prefix}  ${x}`);
+};
+// 여기서 this는 자신이 아니라 본인을 포함하는 외부 스코프를 말함. Prefixer를 말함
+
+const pre = new Prefixer("Hello!");
+console.log(pre.prefixArray(["Lee", "Kim"]));
+```
+
+- 화살표 함수는 `call()`, `apply()`, `bind()`메소드를 사용하여 `this`를 변경할 수 X
+
+  ```jsx
+  window.a = 1;
+  const normal = function () {
+    return this.a;
+  };
+  const arrow = () => this.a;
+
+  console.log(normal.call({ x: 100 })); // 100
+  console.log(arrow.call({ x: 100 })); // 1
+  ```
+
+# 화살표 함수를 사용해선 안되는 경우
+
+> 화살표 함수는 `Lexical this`를 지원하므로 콜백 함수로 사용하기 좋지만,<br/>
+> 오히려 혼란을 불러일으키는 경우가 있어서 아래와 같은 상황에서는 화살표 함수를 사용하는 것을 주의하여야한다.
+
+### 메소드
+
+> 화살표 함수로 메소드를 정의 X
+> 화살표 함수로 메소드를 정의하면 `this`때문에 원하지 않은 결과가 나올 수 있다.
+
+```jsx
+const person = {
+  name: "Lee",
+  greeting: () => console.log(`Hello, ${this.name}`),
+};
+
+person.greeting(); // Hello undefined
+```
+
+- 메소드로 정의한 화살표 함수 내부에서 `this`는 이 메소드를 호출한 객체를 가르키는 것이 아니라 전역 객체인 `window`를 가르키기 때문에 undefined가 뜬다.<br/>
+
+##### ES6 축약 메소드 표현 (권장)
+
+```jsx
+const person = {
+  name: "Lee",
+  greeting() {
+    console.log(`Hello, ${this.name}`);
+  },
+};
+
+person.greeting(); // Hello, Lee
+```
+
+### Prototype
+
+```
+[ 💡 Note ]
+prototype 따로 정리. 프로토타입과 프로토타입 상속 확인.
+```
+
+- 화살표 함수로 정의된 메소드를 prototype에 할당
+
+```jsx
+const person = {
+  name: "Lee",
+};
+
+Object.prototype.greeting = () => console.log(`Hello, ${this.name}`);
+
+person.greeting(); // Hello, undefined
+```
+
+- 메소드를 prototype에 할당하면, 메소드를 정의한 것과 동일한 문제가 발생한다. 따라서 이 경우, `일반 함수`를 할당해야한다.
+
+```jsx
+const person = {
+  name: "Lee",
+};
+Object.prototype.greeting = function () {
+  console.log("Hello, ${this.name}");
+};
+
+person.greeting(); // Hello, Lee
+```
+
+### 생성자 함수
+
+> 화살표 함수는 생성자 함수로 사용할 수 없다. <br/>
+> 생성자 함수는 `prototype 프로퍼티`를 가지며, `prototype 프로퍼티`가 가르키는 프로토타입 객체의 `constructor`를 사용한다.
+> 그러나 화살표 함수는 `prototype 프로퍼티`를 가지고 있지 않기 때문에 사용할 수 없다.
+
+```jsx
+const Test = () => {};
+
+console.log(Test.hasOwnProperty("prototype")); // false
+
+const test = new Test(); // TypeError: Test is not a constructor
+```
+
+- `hasOwnProperty()`메소드는 (key) key 이름이 있으면 `true`, 없으면 `false`를 반환한다.
+- 화살표 함수는 prototype 프로퍼티가 없어서 false를 반환한다.
+
+### `addEventListener`함수의 콜백 함수
+
+> `addEventListener` 함수의 콜백 함수를 화살표함수로 정의할 경우, `this`는 전역객체인 `window`를 가르킨다.
+
+```jsx
+var button = document.getElementById("btn");
+
+button.addEventListener("click", () => {
+  console.log(this === window); // true
+  this.innerHTML = "CLiCKED BUTTON";
+});
+```
+
+- 따라서 `addEventListener`를 콜백 함수 내에서 `this`를 사용하려면 **화살표 함수로 정의하지 말고 일반 함수로 정의**하는 것이 좋다.
+
+```jsx
+var button = document.getElementById("btn");
+
+button.addEventListener("click", function () {
+  console.log(this === button); // true
+  this.innerHTML = "CLiCKED BUTTON";
+});
+```
