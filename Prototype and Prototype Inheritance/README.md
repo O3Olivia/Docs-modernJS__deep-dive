@@ -46,6 +46,7 @@ console.log(me.getType()); // human
 ```
 
 - 여기서 props와 value를 설정할 수 있다.
+
   <img src="https://user-images.githubusercontent.com/87024040/209090397-3fedfc54-d8f8-47e5-8493-8840eaa1f860.png" width="600" height="300">
 
 ```jsx
