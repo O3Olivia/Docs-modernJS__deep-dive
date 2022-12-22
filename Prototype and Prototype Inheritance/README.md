@@ -30,7 +30,8 @@ var me = new Person();
 
 > 함수를 정의하면 다른 곳에 생성되는 `prototype 객체`는 다른 객체의 원형이 되는 객체다. <br/>
 > 모든 객체가 접근할 수 있고, `prototype 객체`도 동적으로 런타임에 멤버들을 추가할 수 있다.
-> <img src="https://user-images.githubusercontent.com/87024040/209093503-1ff80999-8ed4-4ffd-afce-e9b3d172fd9e.png" width="600" height="300">
+
+<img src="https://user-images.githubusercontent.com/87024040/209093503-1ff80999-8ed4-4ffd-afce-e9b3d172fd9e.png" width="600" height="300">
 
 ```jsx
 function Person() {}
