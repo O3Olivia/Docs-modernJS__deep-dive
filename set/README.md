@@ -156,3 +156,6 @@ console.log(set13.isSuperset(set14)); // true
 // set14가 set13의 상위 집합인가
 console.log(set14.isSuperset(set13)); // false
 ```
+- 여기서 `this`는 `subset`의 상위 집합인지 확인한다.
+- `every`를 이용하여 모든 [...subset]의 요소들이 superSetArr에 존재하는지 확인한 뒤, true/false 반환 
+- 역시 합집합의 경우 순서가 바뀌어도 상관없지만, `차집합`의 경우 `순서`에따라 경과가 다르기때문에 **순서에 신경**을 써야한다. 
