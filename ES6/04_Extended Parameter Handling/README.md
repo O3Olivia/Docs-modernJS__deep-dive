@@ -216,7 +216,57 @@ console.log(
 
 ```jsx
 function test(param, ...rest){
-  
+  console.log(param); // 1
+  console.log(rest); // [2, 3, 4]
 }
+test(1, 2, 3);
 ```
 
+##### `spread`로 분리될 경우
+> 배열 인수는 분리되어서 `순차적`으로 매개변수에 할당된다
+
+```jsx
+function test2(x, y, z) {
+  console.log(x); // 1
+  console.log(y); // 2
+  console.log(z); // 3
+}
+
+test2(...[1, 2, 3]);
+```
+
+##### `spread`문법을 사용한 인수는 더 자유롭다
+> `Rest`파라미터는 반드시 마지막 파라미터여야하지만, `spread`문법을 사용한 인수는 `자유롭게` 사용할 수 있다.
+
+```jsx
+function test3(a, b, c, d, e, f, g) {
+  console.log(a); // 1
+  console.log(b); // 2
+  console.log(c); // 3
+  console.log(d); // 4
+  console.log(e); // 5
+  console.log(f); // 6
+  console.log(g); // 7
+}
+
+test3(1, ..[2, 3], 4, ...[5, 6, 7]);
+```
+- ...[2, 3]과 ...[5, 6, 7]은 개별 요소로 분리한다 = `2,3 5, 6, 7`
+
+### 배열에서 사용하는 경우
+> `spread`문법을 배열에서 사용하면, 보다 `간결`하고 `가독성`있게 표현할 수 있다.
+
+#### concat
+##### ES5
+> `ES5`에서 기존 배열의 요소를 새로운 배열 요소의 일부로 만들고 싶을 경우 `concat`메소드를 사용했다.
+
+```jsx
+var arr = [1, 2, 3];
+console.log(arr.concat([4, 5, 6]); // [1, 2, 3, 4, 5, 6]
+```
+##### ES6
+> `ES6`에서는 `spread`문법을 사용하여 기존 배열을 새로운 배열 요소의 일부로 만들 수 있다.
+```jsx
+const arr = [1, 2, 3];
+console.log([...arr, 4, 5, 6]); // [1, 2, 3, 4, 5, 6];
+```
