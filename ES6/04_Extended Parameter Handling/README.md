@@ -253,10 +253,10 @@ test3(1, ..[2, 3], 4, ...[5, 6, 7]);
 ```
 - ...[2, 3]과 ...[5, 6, 7]은 개별 요소로 분리한다 = `2,3 5, 6, 7`
 
-### 배열에서 사용하는 경우
+## 배열에서 사용하는 경우
 > `spread`문법을 배열에서 사용하면, 보다 `간결`하고 `가독성`있게 표현할 수 있다.
 
-#### concat
+### concat
 ##### ES5
 > `ES5`에서 기존 배열의 요소를 새로운 배열 요소의 일부로 만들고 싶을 경우 `concat`메소드를 사용했다.
 
@@ -269,4 +269,100 @@ console.log(arr.concat([4, 5, 6]); // [1, 2, 3, 4, 5, 6]
 ```jsx
 const arr = [1, 2, 3];
 console.log([...arr, 4, 5, 6]); // [1, 2, 3, 4, 5, 6];
+```
+
+### push
+##### ES5
+> `ES5`에서는 기존 배열에 다른 배열의 개별 요소를 각각 넣으려면 아래와 같이 사용해야했다.
+
+```jsx
+var arr1 = [1, 2, 3];
+var arr2 = [4, 5, 6];
+
+Array.prototype.push.apply(arr1, arr2);
+console.log(arr1); // [1, 2, 3, 4, 5, 6]
+```
+- `2번째`인자를 개별 인자로 `push` 메소드에 전달된다.
+
+##### ES6
+```jsx
+const arr1 = [1, 2, 3];
+const arr2 = [4, 5, 6];
+
+arr1.push(...arr2); 
+console.log(arr1); // [1, 2, 3, 4, 5, 6]
+```
+
+### splice
+> 기존의 배열에 다른 배열의 개별요소를 삽입 
+```jsx
+var arr1 = [1, 2, 5, 6];
+var arr2 = [3, 4];
+
+Array.prototype.splice.apply(arr1, [2, 0].concat(arr2));
+console.log(arr1); // [ 1, 2, 3, 4, 5, 6 ]
+```
+`Array.prototype.splice.apply(arr1, [2, 0].concat(arr2));` => arr1[2]부터 0개의 요소를 제거한 뒤 그 자리에 arr2를 삽인한다.
+
+##### ES6
+```jsx
+const arr1 = [1, 2, 3, 7, 8];
+const arr2 = [4, 5, 6];
+
+arr1.splice(3, 0, ...arr2);
+console.log(arr1); // [1, 2, 3, 4, 5, 6, 7, 8]
+```
+
+### copy
+> 기존의 배열을 복사
+##### ES5
+```jsx
+var arr = [1, 2, 3];
+var test = arr.slice();
+
+console.log(test); // [1, 2, 3]
+
+test.push(4); 
+console.log(test); // [1, 2, 3, 4]
+console.log(arr); // [1, 2, 3]
+```
+- arr의 값은 변경되지 않는다.
+- arr의 값을 복사해서 test값으로 넘겨줬기 때문이다.
+
+##### ES6
+```jsx
+const arr = [1, 2, 3];
+
+const test = [ ...arr ];
+console.log(test); // [1, 2, 3]
+
+test.push(4); 
+console.log(test); // [1, 2, 3, 4]
+console.log(arr); // [1, 2, 3]
+```
+- arr의 값은 변경되지 않는다.
+- arr의 값을 복사해서 test값으로 넘겨줬기 때문이다. (ES5와 동일)
+
+##### 여기서 복사를 한다고해서 같다고 볼 수 있을까?
+> NOPE 다만, 배열의 요소는 같다.
+```jsx
+const skills = [
+    { id: 1, content: 'HTML', completed: true },
+    { id: 2, content: 'CSS', completed: true },
+    { id: 3, content: 'Javascript', completed: false }
+];
+
+const mySkills = [...skills];
+console.log(mySkills === skills); // false
+console.log(myskills[0] === mySkills[0]); // true
+```
+- 이는 원본 배열의 각 요소를 `얕은 복사(shallow copy)`하여 복사본은 만들었기 때문이다.
+
+##### 유사배열객체(Array-like Object)를 배열로 변환
+```jsx
+const htmlCollection = document.getElementsByTagName('li');
+const newArr = [...htmlCollection]; 
+
+// Array.from을 사용해도 된다.
+const newArr = Array.from(htmlCollection);
 ```
