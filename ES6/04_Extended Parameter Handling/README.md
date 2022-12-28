@@ -177,3 +177,46 @@ console.log(
 //4️⃣
 //5️⃣
 ```
+### 함수의 인수로 사용하는 경우
+>배열의 각 요소를 분해해서 파라미터로 전달하고 싶은 경우, `Function.prototype.apply`를 사용한다.
+
+##### ES5
+```jsx
+  function test(x, y, z) {
+    console.log(x); // 1
+    console.log(y); // 2
+    console.log(z); // 3
+    
+    const arr = [1, 2, 3]
+    
+    test.apply(null, arr); 
+  }
+```
+- arr의 배열을 분해해서 각각의 요소를 파라미터에 전달하기 위해서 `apply`를 사용했다.
+
+##### ES6
+```jsx
+  function test(x, y, z){
+    console.log(x); // 1
+    console.log(y); // 2
+    console.log(z); // 3
+  }
+  
+  const arr = [1, 2 ,3];
+  
+  test(...arr);
+```
+- `spread`문법을 사용했다.
+  - ...arr 는 `...[1, 2, 3]`이며, 여기 배열 안의 [1, 2, 3]을 개별 요소로 분리한다.
+  - 그리고 개별 요소는 개별적인 인자로 각각의 `매개변수`에 전달된다.
+
+##### `Rest` 파라미터역시 `spread`문법을 사용하여 파라미터를 정의했기때문에 혼동에 주의할 것.
+###### `Rest`로 분리될 경우
+> ...rest는 분리된 요소들을 함수 내부에 배열로 전달한다.
+
+```jsx
+function test(param, ...rest){
+  
+}
+```
+
