@@ -98,4 +98,41 @@ obj.greeting(); // HI Lee
 ```
 
 # __proto__ 프로퍼티에 의한 상속 
-> 
+##### ES5
+> ES5에서 객체 리터럴을 상속하기 위해서 **프로토타입 패턴 상속인** `Object.create()`함수를 사용한다.
+
+```jsx
+var parent = {
+  name = 'parent',
+  greeting: function() {
+    console.log('HELLO~ ' + this.name);
+  }
+};
+
+var child = Object.create(parent);
+child.name = 'child';
+
+parent.greeting(); // HELLO~ parent
+child.greeing(); // HELLO~ child
+```
+
+##### ES6
+> ES6에서는 객체 리터럴 내부에서 `__proto__` 프로퍼티를 직접 설정할 수 있다.
+> 객체 리터럴에 의해 생성된 객체의 `__proto__` 프로퍼티에 다른 객체를 직접 바인딩하여 상속을 표현할 수 있다.
+
+```jsx
+const parent = {
+  name: 'parent',
+  greeting() {
+    console.log('HELLO~~~~ ' + this.name);
+  }
+};
+
+const child = {
+  __proto__: parent,
+  name: 'child'
+};
+
+parent.greeting(); // HELLO~~~~ parent
+child.greeting();// HELLO~~~~ child
+```
