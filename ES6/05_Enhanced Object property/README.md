@@ -16,7 +16,7 @@
 ## 프로퍼티 축약 표현
 ##### ES5
 > ES5에서는 객체 리터럴 프로퍼티는 프로퍼티의 이름 & 값으로 구성된다.
-> 프로퍼티의 값은 변수에 할당된 값일 수 있다.
+> 프로퍼티의 값은 `변수에 할당된 값`일 수 있다.
 
 ```jsx
 var x = 1, y= 2;
@@ -39,4 +39,63 @@ console.log(obj); // {x: 1, y: 2}
 ```
 
 ## 프로퍼티 키 동적 생성
+> `문자열`이나 `문자열로 변환 가능한 값`을 반환하는 표현식을 사용해 프로퍼티를 동적으로 생성할 수 있다.
+> 이때 `[...]` 대괄호로 묶어서 표현해야한다 = `계산된 프로퍼티 이름(Computed property name)`
 
+##### ES5
+>ES5에서는 객체 리터럴 **외부**에서 `[...]`를 사용해야한다.
+```jsx
+var name = `prop`;
+var i = 0;
+
+var obj = {};
+
+obj[name + '-' + ++i] = i;
+obj[name + '-' + ++i] = i;
+obj[name + '-' + ++i] = i;
+
+console.log(obj); // {prop-1: 1, prop-2: 2, prop-3: 3}
+```
+
+##### ES6
+> ES6에서는 객체 리터럴 **내부**에서도 프로퍼티키를 동적으로 생성할 수 있다.
+```jsx
+const name = 'prop';
+let i = 0;
+
+const obj = {
+ [`${name}-${++i}`]: i,
+ [`${name}-${++i}`]: i,
+ [`${name}-${++i}`]: i
+};
+console.log(obj); // {prop-1: 1, prop-2: 2, prop-3: 3}
+```
+
+# 메소드 축약 표현
+##### ES5
+> ES5에서는 메소드를 선언하기 위해선 프로퍼티 값으로 함수 선언식을 할당해야한다.
+```jsx
+var obj = {
+  name : 'Lee',
+  greeting: function() {
+    console.log('HI ' + this.name );
+  }
+};
+obj.greeting(); // HI Lee
+```
+
+##### ES6
+> ES6에서는 메소드를 선언할 때, `function`키워드를 **생략**한 축약표현을 사용한다.
+```jsx
+const obj={
+  name : 'Lee',
+  greeing(){
+    console.log('HI ' + this.name);
+  }
+};
+
+obj.greeting(); // HI Lee
+```
+
+# __proto__ 프로퍼티에 의한 상속 
+> 
