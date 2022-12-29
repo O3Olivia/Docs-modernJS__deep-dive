@@ -54,3 +54,50 @@ me.name = "Lee";
 
 console.log(me.name); // Lee
 ```
+
+### 프로토타입 패턴 상속(Prototypal Inheritance)
+> 프로토타입 패턴 상속은 `Object.create 함수`를 사용하여 객체에서 다른 객체로 직접 상속을 구현하는 방식.
+> `new` 연산자가 필요없으며, 생성자의 링크도 파괴되지 않고, 객체 리터럴에서도 사용할 수 있다.
+
+```jsx
+// 부모 생성자 함수
+var Parent = (function () {
+  // Constructor
+  function Parent(name) {
+    this.name = name;
+  }
+  
+  // method
+  Parent.prototpye.greeting = function() {
+    console.log("HI ' + this. name);
+  };
+  // trturn constructor
+  return Parent;
+}());
+
+var child = Object.create(Parent.prototype);
+child.name = 'child';
+child.greeting(); // HI child
+console.log(child instanceof parent); // true
+```
+
+##### 객체 리터럴 패턴으로 생성한 객체에도 프로토타입 패턴을 상속할 수 있다.
+```jsx
+var parent= {
+  name: 'parent',
+  greeting: function() {
+    console.log('HI~ ' + this.name);
+  }
+};
+
+var child = Object.create(parent);
+child.name = 'child';
+
+parent.greeting(); // HI~ parent
+child.greeting(); // Hi~ child
+
+console.log(parent.isPrototypeOf(child)); true
+```
+<img src="src="https://user-images.githubusercontent.com/87024040/209906129-73824bde-ed3c-4f1b-b5dc-4760ccefe8f5.png"/>
+
+- `Oject.create`함수는
