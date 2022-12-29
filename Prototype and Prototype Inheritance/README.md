@@ -98,7 +98,7 @@ child.greeting(); // Hi~ child
 
 console.log(parent.isPrototypeOf(child)); true
 ```
-<img src="https://user-images.githubusercontent.com/87024040/209906129-73824bde-ed3c-4f1b-b5dc-4760ccefe8f5.png"/>
+<img src="https://user-images.githubusercontent.com/87024040/209906129-73824bde-ed3c-4f1b-b5dc-4760ccefe8f5.png" width="600" height="300"/>
 
 - `Oject.create`함수는 매개변수에 프로토타입으로 설정할 `객체` 또는 `인스턴스`를 전달하고, 이를 상속하는 
 **새로운 객체**를 생성한다.
