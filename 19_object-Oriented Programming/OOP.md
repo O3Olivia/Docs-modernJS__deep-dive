@@ -93,3 +93,74 @@
 ### 단점
 - 처리 속도가 조금 느리다.
 - 객체 수가 많아지면서 용량이 커진다.
+
+# 클래스 기반 VS 프로토타입 기반
+> 객체지향프로그래밍 언어에는 `클래스`기반 언어와 `프로토타입`기반 언어로 나뉜다.
+
+### 클래스 기반 언어 
+> 클래스 기반 언어에는 `Java, C++, C#, Python, PHP, Ruby, Oject-C`가 있다.
+> 객체의 자료구조와 기능을 정의하고 `생성자`를 통해 인스턴스를 생성한다.
+
+- 클래스는 객체 생성에 사용되는 패턴, 청사진과 같이 설계도일 뿐이며, `new 연산자`를 통해 인스턴스화해야한다.
+  - 하나의 클래스에서 `상속받은 인스턴스`가 존재한다.`상위클래스`와 `하위클래스`의 개념
+- 모든 인스턴스는 클래스에서 정의된 범위 내에서만 작동하고, 런타임에서 구조를 변경할 수 없다.
+- 따라서, `정확성`, `안정성`, `예측성`면에서 **프로토타입 기반 언어** 보다 **더 나은 결과**를 보장한다.
+
+##### 클래스 기반 언어 예시 with Java
+```java
+class Person {
+  private String name;
+  
+  public Person(String name) {
+    this.name = name;
+  }
+  
+  public void setName(String name){
+    this.name = name;
+  }
+  
+  puvlic String getName() {
+    return this.name;
+  }
+  
+  public static void main(String[] args){
+    Person me = new Person("Seulgi");
+    
+    String name = me.getName();
+    System.out.println(name); // Seulgi
+  }
+}
+```
+
+### 프로토타입 기반 언어 
+> JavaScript는 `프로토타입`기반 객체지향언어다.
+
+- 클래스기반 언어와 다르게 class가 없다. 
+- 따라서, `prototype`을 위임하여 상속함으로써 `상속`의 과정이 구현된다.
+```
+[ 💡 NOTE  ]
+
+- 클래스 기반 언어 : 클래스 그 틀 자체를 상속시키고, 상속시킨 클래스를 이용해서 객체를 생성한다.
+- 프로토타입 기반 언어 : 객체들을 'prototype'으로 연결시킨다. 
+👩‍💻 따라서 'class'를 통한 상속 / 'prototype'을 통한 상속이 가장 큰 차이점 👩‍💻
+```
+#### 프로토타입기반 언어는 클래스의 개념이 없기 때문에 별도의 객체 생성 방법이 있다.
+  ##### 객체 리터럴
+  ```jsx
+  const obj1 = {};
+  obj1.name = "Seulgi";
+  ```
+  ##### Object() 생성자 함수
+  ```jsx
+  const obj2 = new Object();
+  obj2.name = "Seulgi";
+  ```
+  ##### 생성자 함수
+  ```jsx
+  function F(){}
+  const obj3 = new F();
+  obj3.name = "Seulgi";
+  ```
+- 프로토타입기반 언어인 자바스크립트는 생성된 인스턴스의 자료구조와 기능을 `동적`으로 **변경**할 수 있다.
+- 객체지향의 `상속`, `캡슐화(정보 은닉)`은 **프로토타입**의 `체인`과 `클로저`로 구현될 수 있다.
+- 자바스크립트에서는 함수 객체로 `클래스`, `생성자`, `메소드` 모두 구현 가능하다.
