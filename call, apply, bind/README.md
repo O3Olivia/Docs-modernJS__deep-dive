@@ -113,6 +113,7 @@ oldMe(); // Olivia은 25살이고, Dublin에 살고 있습니다
 
 ```
 [ 💡 NOTE  ]
+
 - call(), apply(), bind() 메소드는 함수시 'this'를 바인딩 할 때 사용한다.
 - call()과 apply() 메소드는 메소드의 호출 주체인 함수를 '즉시 실행'한다.
 - call()과 apply() 메소드의 차이는 apply()메소드는 '배열'로 인자를 받는다.
