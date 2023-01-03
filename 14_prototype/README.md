@@ -214,23 +214,69 @@ child.greeting(); // HI child
 console.log(child instanceof parent); // true
 ```
 
+### 의사 클래스 패턴 상속(Pseudo-classical Inheritance)
 ##### 객체 리터럴 패턴으로 생성한 객체에도 프로토타입 패턴을 상속할 수 있다.
-```jsx
-var parent= {
-  name: 'parent',
-  greeting: function() {
-    console.log('HI~ ' + this.name);
+
+<img src="https://user-images.githubusercontent.com/87024040/210308996-b72d30d9-3f0b-4432-9dac-1f1af081ee5f.png" width="600" height="300">
+
+```jsx 
+// 부모 생성자 함수
+var Parent = (function () {
+  // constructor
+  function Parent(name){
+    this.name = name;
   }
-};
+  
+  // method
+  Parent.prototype.greeting = function() {
+    console.log("HELLO~~ " + this.name);
+  };
+  
+  // return constructor
+  return Parent;
+}());
 
-var child = Object.create(parent);
-child.name = 'child';
+// 자식 생성자 함수 
+var Child = (function () {
+  // constructor 
+  function Child(name){
+    this.name = name;
+  }
+  
+  // 자식 생성자 함수의 프로토타입 객체를 부모 생성자 함수의 인스턴스로 교체 
+  Child.prototype = new Parent(); 
+  
+  // 메소드 오버라이드
+  Child.prototype.greeting = function () {
+    console.log("안녕하세요~ " + this.name);
+  };
+  
+  // goodbye 메소드는 Parent 생성자 함수의 인스턴스에 위치 
+  Child.prototype.goodbye = function () {
+    console.log("안녕히 가세요~ " + this.name);
+  };
+  
+  // return constructor
+  return Child;
+}());
 
-parent.greeting(); // HI~ parent
-child.greeting(); // Hi~ child
+var child = new Child('child');
+console.log(child); // Parent { name: 'child' }
 
-console.log(parent.isPrototypeOf(child)); true
+console.log(Child.prototype); 
+// Parent {
+//   name: undefined,
+//   greeting: [Function (anonymous)],
+//   goodbye: [Function (anonymous)]
+// }
+
+child.greeting(); // 안녕하세요~ child
+child.goodbye(); // 안녕히 가세요~ child
+
+console.log(child instanceof Parent); // true
+console.log(child instanceof Child); // true
 ```
+
 <img src="https://user-images.githubusercontent.com/87024040/209906129-73824bde-ed3c-4f1b-b5dc-4760ccefe8f5.png" width="600" height="300"/>
 
 - `Oject.create`함수는 매개변수에 프로토타입으로 설정할 `객체` 또는 `인스턴스`를 전달하고, 이를 상속하는 
