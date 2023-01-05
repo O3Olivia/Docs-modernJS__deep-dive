@@ -243,3 +243,92 @@ class Test{
 ```
 
 ## 정적 메소드
+> 클래스의 정적(static)메소드를 정의할 때 `static` 키워드를 사용한다. <br/>
+> 정적 메소드는 클래스의 인스턴스가 아닌 클래스 이름으로 호출해서 인스턴스를 생성하지 않아도 호출 가능하다.
+
+```jsx
+class Test {
+  constructor(prop){
+    this.prop = prop;
+  }
+  
+  static staticMethod(){
+    return 'staticMethod';
+  }
+  
+  prototypeMethod() {
+    return this.prop;
+  }
+}
+
+// 정적 메소드는 클래스 이름으로 호출한다.
+console.log(Test.staticMethod());
+
+const test = new Test("hi");
+// 정적 메소드는 인스턴스로 호출할 수 없다.
+console.log(test.staticMethod()); // Uncaught TypeError
+```
+- 정적 메소드는 `this`를 사용할 수 없다.
+- 정적 메소드 내부에서 `this`는 클래스의 인스턴스가 아닌 클래스 자기 자신이다.
+```
+[💡 NOTE  ]
+정적 메소드는 Math 객체의 메소드처럼 애플리케이션 전역에서 사용할 유틸리티(utility)함수를 생성할 때로
+주로 사용한다.
+```
+
+##### 사실 class도 **함수**이고, 기존 prototype 기반 패턴의 Syntactic sugar일 뿐이다.
+```jsx
+class Test{}
+
+cosnole.log(typeof Test); // function
+```
+##### 위의 예시를 ES5로 변경
+
+```jsx
+var Test = (funciton () {
+    function Test(prop) {
+    this.prop = prop;
+  }
+  
+  Test.staticMethod = function () {
+    return 'staticMethod';
+  };
+
+  Test.prototype.prototypeMethod = function () {
+    return this.prop;
+  };
+  
+  return Test;
+}());
+
+var test = new Test("hi");
+console.log(test.prototypeMethod()); // hi
+console.log(Test.staticMethod()); // staticMethod
+console.log(test.staticMethod()); // Uncaught TypeError
+```
+
+- **함수 객체는 prototype 프로퍼티를 갖**는데 일반 객체와는 다르며, **일반 객체는 prototype 프로퍼티를 갖지 않는다**.
+- 함수 객체만이 가지고 있는 `prototype 프로퍼티`는 함수 객체가 **생성자**로 사용될 때, <br/>
+  이 함수를 통해 생성된 객체의 `부모`역할을 하는 프로토타입 객체를 의미한다.
+- 위의 예시는 Test는 생성자 함수. <br/>
+  생성자 함수 Test의 prototype 프로퍼티가 가르키는 프로토타입 객체는 생성자 함수 Test를 통해 생성되는 <br/>
+  인스턴스 test의 부모역할을 한다.
+  ```jsx
+  console.log(Test.prototype === test.__proto__); // true
+  ```
+  - 생성자 함수 Test의 prototype 프로퍼티가 가르키는 프로토타입 객체가 가지고 있는 constructor는 <br/>
+  생성자 함수 Test를 가르킨다.
+  ```jsx
+  console.log(Test.prototype.constructor === Test);// true
+  ```
+  <img src="https://user-images.githubusercontent.com/87024040/210776674-0e738092-6723-4c12-938b-98c0f31a8234.png" widht="550" height="300">
+ ```
+ [ 👩‍ NOTE  ]
+ 정적 메소드인 staticMethod는 생성자 함수 Test의 메소드고, 
+ 일반 메소드인 prototypeMethod는 프로토타입 객체 Test.prototype 메소드다.
+ 따라서 staticMethod는 test에서 호출될 수 없다.
+ ```
+  
+
+
+
