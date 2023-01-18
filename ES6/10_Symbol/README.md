@@ -59,6 +59,8 @@ number, string, boolean, symbol 데이터 타입에 대응하는
 Number, String, Boolean, Symbol 이다.
 만약, 문자열 프로퍼티에 접근할 때, 자바스크립트는 new String()을 호출한 것 처럼 문자열 값을 객체로 변환하는데 이 객체가 래퍼객체다.
 이 래퍼 객체는 프로퍼티를 참조할 때 생성되고, 프로퍼티 참조가 끝나면 사라진다.
+
+래퍼 타입들 덕에 기본형 값에 메서드를 사용할 수 있고, 정적 메서드(String.fromCharCode와 같은)도 사용할 수 있다.
 ```
 
 - Symbol()함수는 `문자열`을 인자로 전달할 수 있다.
