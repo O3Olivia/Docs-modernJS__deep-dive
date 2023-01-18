@@ -13,7 +13,6 @@
         - 값에 의한 전달의 의미는 값이 전달되는 것이 아니라, 메모리 주소가 전달 된다는 말이다.
 
 객체타입 : - 변경 가능한 값
-         -
 ```
 
 - 원시 타입(Primitive data type)
@@ -61,6 +60,10 @@ Number, String, Boolean, Symbol 이다.
 이 래퍼 객체는 프로퍼티를 참조할 때 생성되고, 프로퍼티 참조가 끝나면 사라진다.
 
 래퍼 타입들 덕에 기본형 값에 메서드를 사용할 수 있고, 정적 메서드(String.fromCharCode와 같은)도 사용할 수 있다.
+
+** 타입스크립트를 사용할 경우, string은 String에 할당할 수 있지만, String은 string에 할당할 수 없다.
+   따라서, 타입스크립트를 사용한다면, 객체 래퍼 타입을 사용하는 것은 피하고 기본형 타입을 사용하는 것이 좋다. **
+   String-> string, Number -> number, Boolean -> boolean, Symbol -> symbol, BigInt -> bigint
 ```
 
 - Symbol()함수는 `문자열`을 인자로 전달할 수 있다.
