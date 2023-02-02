@@ -226,8 +226,50 @@ abstract class Fruit {
 
 ```
 
+# 함수
 
+## 함수의 기본적 타입 선언 방법
 
+```tsx
+funciton sum(a: number, b: number): number {
+  return a + b;
+}
+```
+
+## 함수의 인자
+> TypeScript에서는 함수의 인자를 모두 필수값이다.
+> 함수의 매개변수를 설정하면 `undefined`나 `null`이라도 넘겨야한다.
+
+```tsx
+function sum(a: number, b: number): number{
+  return a + b;
+}
+
+sum(1, 5); // 6
+sum(1, 5, 6); // ERROR: too many parameters
+sum(1); // ERROR: too few parameters
+```
+
+### 만약, 매개변수 인자만큼 넘기지 않고 싶다면 `?`를 사용하면 된다.
+```tsx
+function sum(a: number, b?: number): number{
+  return a + b;
+}
+
+sum(1, 5); // 6
+sum(1, 5, 6); // ERROR: too many parameters
+sum(1); // 에러 없음
+```
+
+### 매개변수 초기화
+```tsx
+function sum(a: number, b = '10'): number {
+  return a + b;
+}
+sum(1, undefined); // 11
+sum(1, 5, 6); // error, too many parameters
+sum(100); // 110
+```
 
 
 
