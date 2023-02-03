@@ -271,12 +271,81 @@ sum(1, 5, 6); // error, too many parameters
 sum(100); // 110
 ```
 
+## `REST`문법의 매개변수
+```tsx
+function sum(a: number, ...nums: number[]): number{
+  const totalNums = 0;
+  for (let key in nums) {
+    totalNums += nums[key];
+  }
+  return a + totalNums;
+}
+```
+
+## `this`
+> TypeScript에서 JavaScript의 `this`가 잘못 사용되었을 때 감지한다.
+
+```tsx
+function 함수명(this: 타입){
+  //...
+}
+```
+```tsx
+interface Test {
+  element: string;
+  count: number;
+  init(this: Test): () => {};
+}
+
+let test: Test = {
+  element: '#APP',
+  count: 20,
+  init: function(this: Test){
+    return () => {
+      return this.count;
+    }
+  }
+}
+
+let getCount = test.init();
+let count = getCount();
+console.log(count); // 20
+```
 
 
+## 콜백의 `this`
+> 콜백으로 함수가 전달될 경우, `this`를 구별해야한다.
 
+```tsx
+interface UIElement {
+  addClickListener(onClick: (this: void, event: Event) => void): void;
+}
 
+class Handler {
+  message: string;
+  onClick(this: Handler, event: Event){
+    this.message = event.message;
+  } ERROR: UIElement에서 this가 필요 없다고 선언했는데, this.info로 this를 사용해서 에러 발생
+}
 
+let handler = new Handler();
+uiElement.addClickListener(handler.onClick); // ERROR!
+```
+- `this: void`는 `this`타입을 선언할 필요가 없다는 의미
+- UIElement에서 **this가 필요 없다고 선언**했는데, this.info로 this를 사용해서 에러 발생
 
+## UIElement에 맞춰 Handler 다시 구현
+```tsx
+class Handler {
+  message: string;
+  onClick(this: void, event: Event){
+    console.log("HEY! STOP CLICK ME"); 
+  }
+}
 
-
+let handler = new Handler();
+uiElement.addClickListener(handler.onClick); 
+```
+-  `this: void`는 `this`타입을 선언할 필요가 없다는 의미
+- 따라서 this를 사용하지 않아 에러가 발생하지 않는다.
 
